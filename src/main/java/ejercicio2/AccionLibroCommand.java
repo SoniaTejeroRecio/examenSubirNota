@@ -17,6 +17,7 @@ class AñadirStockCommand implements AccionLibroCommand {
     public void ejecutar() {
         try {
             libro.añadirStock(cantidad);
+            System.out.println("El libro se ha añadido correctamente.");
         } catch (NullPointerException e) {
             System.out.println("Error: Intento de añadir stock a un libro que no existe.");
         } catch (ExcepcionStockDesbordado e) {
@@ -24,6 +25,8 @@ class AñadirStockCommand implements AccionLibroCommand {
         }
     }
 }
+
+
 
 
 class QuitarStockCommand implements AccionLibroCommand {
@@ -37,21 +40,32 @@ class QuitarStockCommand implements AccionLibroCommand {
 
     @Override
     public void ejecutar() throws ExcepcionStockDesbordado {
-        // Implement the logic for the 'ejecutar' method here
+        try {
+            libro.quitarStock(cantidad);
+            System.out.println("El libro se ha quitado correctamente.");
+        } catch (NullPointerException e) {
+            System.out.println("Error: Intento de quitar stock a un libro que no existe.");
+        } catch (ExcepcionStockDesbordado e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
 
 
 
-    class ConsultarStockCommand implements AccionLibroCommand {
-        private ILibro libro;
+class ConsultarStockCommand implements AccionLibroCommand {
+    private GestorDeStock gestorDeStock;
 
-        public ConsultarStockCommand(ILibro libro) {
-            this.libro = libro;
-        }
+    public ConsultarStockCommand(GestorDeStock gestorDeStock) {
+        this.gestorDeStock = gestorDeStock;
+    }
 
-        @Override
-        public void ejecutar() throws ExcepcionStockDesbordado {
-            //TODO: Implementar
+    @Override
+    public void ejecutar() {
+        try {
+            System.out.println("Stock actual: " + gestorDeStock.consultarStock());
+        } catch (NullPointerException e) {
+            System.out.println("Error: Intento de consultar stock de un libro que no existe.");
         }
     }
+}

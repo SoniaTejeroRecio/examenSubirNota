@@ -4,22 +4,7 @@ import java.util.Scanner;
 public class SistemaDeControlDeStock {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        ItemFactory factory = new ItemFactory() {
-            @Override
-            public ILibro crearLibro() {
-                return null;
-            }
-
-            @Override
-            public IRevista crearRevista() {
-                return null;
-            }
-
-            @Override
-            public IPeriodico crearPeriodico() {
-                return null;
-            }
-        };
+        ItemFactory factory = new LibroFactory();
         GestorDeStock gestorDeStock = new GestorDeStock(factory);
 
         while (true) {
@@ -40,7 +25,7 @@ public class SistemaDeControlDeStock {
 
             try {
                 if (!accion.equals("consultar")) {
-                    System.out.println("Introducir cantidad a añadir:");
+                    System.out.println("Introducir cantidad:");
                     long cantidad = Long.parseLong(scanner.nextLine());
 
                     if (cantidad > Integer.MAX_VALUE || cantidad < 0) { // Prevenir entrada negativa y desbordamiento
